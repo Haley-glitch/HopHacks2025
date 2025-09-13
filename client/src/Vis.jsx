@@ -1,7 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Scrollama, Step } from "react-scrollama";
 import "./Vis.css";
 import TableauEmbed from "./components/TableauEmbed";
+
+// Animated Counter Component
+const AnimatedCounter = ({ value, duration = 2000, prefix = "", suffix = "", shouldAnimate }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!shouldAnimate) return;
+
+    let startTime;
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      
+      setCount(Math.floor(progress * value));
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [shouldAnimate, value, duration]);
+
+  return (
+    <span style={{ color: '#ff4444', fontWeight: 'bold' }}>
+      {prefix}{count.toLocaleString()}{suffix}
+    </span>
+  );
+};
 
 function Vis() {
     const [currentStepData, setCurrentStepData] = useState(null);
@@ -166,9 +195,30 @@ function Vis() {
                             ruin you.
                         </div>
                     </div>
+                    <Scrollama offset={0.3} onStepEnter={stepUpdateData}>
+                        <Step data="showStats">
+                            <div style={{height: "100vh", width: "100%"}}>
+                                {/* Stats section */}
+                                {currentStepData === "showStats" && (
+                                    <div className="body-text" style={{textAlign: "center", paddingTop: "40vh"}}>
+                                        You're not alone. Since 2015, cyber attacks have caused over{" "}
+                                        <AnimatedCounter value={579} prefix="$" suffix=" million" shouldAnimate={true} />
+                                        {" "}in damages worldwide.
+                                    </div>
+                                )}
+                            </div>
+                        </Step>
+                    </Scrollama>
                 </div>
 
                 <div style={{height: "500pt", width: "100%"}}>&nbsp;</div>
+                <div>
+                    <TableauEmbed 
+                        url="https://public.tableau.com/views/TrialRunonFinancialLossbyCountry/GeospacialDataFinancialLossbyCountry" 
+                        width="90vw" 
+                        height="700px" 
+                    />
+                </div>
             </div>
         </div>
     );

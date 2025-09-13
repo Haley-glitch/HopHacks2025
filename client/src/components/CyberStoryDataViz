@@ -1,0 +1,359 @@
+import React, { useState, useEffect, useRef } from 'react';
+
+// CSV File Reader Component
+const CSVFileReader = ({ onDataLoaded }) => {
+  const fileInputRef = useRef(null);
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === 'text/csv') {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const csv = e.target.result;
+        const lines = csv.split('\n');
+        const headers = lines[0].split(',').map(h => h.trim());
+        
+        const data = lines.slice(1).filter(line => line.trim()).map(line => {
+          const values = line.split(',');
+          const obj = {};
+          headers.forEach((header, index) => {
+            obj[header] = values[index] ? values[index].trim() : '';
+          });
+          return obj;
+        });
+        
+        onDataLoaded(data);
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  return (
+    <div style={{
+      position: 'fixed',
+      top: '20px',
+      right: '20px',
+      zIndex: 1000,
+      background: 'rgba(0,0,0,0.8)',
+      padding: '10px',
+      borderRadius: '8px',
+      border: '1px solid #333'
+    }}>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".csv"
+        onChange={handleFileUpload}
+        style={{ 
+          color: 'white',
+          fontSize: '12px'
+        }}
+      />
+    </div>
+  );
+};
+
+// Animated Counter with scroll trigger
+const AnimatedCounter = ({ value, duration = 2000, prefix = "", suffix = "", shouldAnimate }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!shouldAnimate) return;
+
+    let startTime;
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      
+      setCount(Math.floor(progress * value));
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  }, [shouldAnimate, value, duration]);
+
+  return (
+    <span style={{ color: '#ff4444', fontWeight: 'bold' }}>
+      {prefix}{count.toLocaleString()}{suffix}
+    </span>
+  );
+};
+
+
+// Attack Timeline
+const AttackTimeline = ({ data, isVisible }) => {
+  if (!data || data.length === 0) return null;
+
+  const yearlyData = data.reduce((acc, attack) => {
+    const year = attack.Year;
+    if (!acc[year]) acc[year] = { attacks: 0, totalLoss: 0 };
+    acc[year].attacks += 1;
+    acc[year].totalLoss += parseFloat(attack['Financial Loss (in Million $)'] || 0);
+    return acc;
+  }, {});
+
+  const years = Object.keys(yearlyData).sort();
+  const maxAttacks = Math.max(...Object.values(yearlyData).map(d => d.attacks));
+
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'flex-end',
+      height: '200px',
+      margin: '40px 20px',
+      borderBottom: '2px solid #333',
+      padding: '20px 0'
+    }}>
+      {years.map((year, index) => {
+        const yearData = yearlyData[year];
+        const barHeight = (yearData.attacks / maxAttacks) * 150;
+        
+        return (
+          <div key={year} style={{ textAlign: 'center' }}>
+            <div
+              style={{
+                width: '60px',
+                height: isVisible ? `${barHeight}px` : '0px',
+                backgroundColor: '#ff4444',
+                marginBottom: '10px',
+                transition: `height ${1 + index * 0.2}s ease-out`,
+                borderRadius: '4px 4px 0 0'
+              }}
+            />
+            <div style={{ fontSize: '14px', fontWeight: 'bold' }}>{year}</div>
+            <div style={{ fontSize: '12px', color: '#ccc' }}>
+              {yearData.attacks} attacks
+            </div>
+            <div style={{ fontSize: '11px', color: '#ff4444' }}>
+              ${yearData.totalLoss.toFixed(1)}M
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+// Industry Impact Chart
+const IndustryChart = ({ data, isVisible }) => {
+  if (!data || data.length === 0) return null;
+
+  const industryData = data.reduce((acc, attack) => {
+    const industry = attack['Target Industry'];
+    if (!acc[industry]) acc[industry] = { count: 0, totalLoss: 0 };
+    acc[industry].count += 1;
+    acc[industry].totalLoss += parseFloat(attack['Financial Loss (in Million $)'] || 0);
+    return acc;
+  }, {});
+
+  const industries = Object.entries(industryData)
+    .sort(([,a], [,b]) => b.totalLoss - a.totalLoss)
+    .slice(0, 6);
+
+  const maxLoss = Math.max(...industries.map(([,data]) => data.totalLoss));
+
+  return (
+    <div style={{
+      background: 'rgba(255,255,255,0.05)',
+      borderRadius: '12px',
+      padding: '30px',
+      margin: '40px 20px'
+    }}>
+      {industries.map(([industry, data], index) => (
+        <div key={industry} style={{ marginBottom: '20px' }}>
+          <div style={{ 
+            fontSize: '14px', 
+            marginBottom: '8px',
+            display: 'flex',
+            justifyContent: 'space-between'
+          }}>
+            <span>{industry}</span>
+            <span style={{ color: '#ff4444' }}>${data.totalLoss.toFixed(1)}M</span>
+          </div>
+          <div style={{
+            height: '20px',
+            background: 'rgba(255,255,255,0.1)',
+            borderRadius: '10px',
+            overflow: 'hidden'
+          }}>
+            <div
+              style={{
+                width: isVisible ? `${(data.totalLoss / maxLoss) * 100}%` : '0%',
+                height: '100%',
+                background: `linear-gradient(90deg, #ff4444, #ff6666)`,
+                transition: `width ${1 + index * 0.2}s ease-out`,
+                borderRadius: '10px'
+              }}
+            />
+          </div>
+          <div style={{ fontSize: '12px', color: '#ccc', marginTop: '4px' }}>
+            {data.count} attacks
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// Main component that integrates with your story
+const CyberStoryDataViz = () => {
+  const [data, setData] = useState([]);
+  const [showStats, setShowStats] = useState(false);
+  const [showDots, setShowDots] = useState(false);
+  const [showTimeline, setShowTimeline] = useState(false);
+  const [showIndustry, setShowIndustry] = useState(false);
+
+  // Calculate stats from data
+  const totalLoss = data.reduce((sum, attack) => 
+    sum + parseFloat(attack['Financial Loss (in Million $)'] || 0), 0
+  );
+  
+  const totalUsers = data.reduce((sum, attack) => 
+    sum + parseInt(attack['Number of Affected Users'] || 0), 0
+  );
+
+  const avgResolutionTime = data.length > 0 ? 
+    data.reduce((sum, attack) => 
+      sum + parseInt(attack['Incident Resolution Time (in Hours)'] || 0), 0
+    ) / data.length : 0;
+
+  // Simulate your scroll triggers
+  useEffect(() => {
+    const timer1 = setTimeout(() => setShowStats(true), 1000);
+    const timer2 = setTimeout(() => setShowDots(true), 2000);
+    const timer3 = setTimeout(() => setShowTimeline(true), 3000);
+    const timer4 = setTimeout(() => setShowIndustry(true), 4000);
+    
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+      clearTimeout(timer4);
+    };
+  }, [data]);
+
+  return (
+    <div style={{
+      background: '#0a0a0a',
+      color: 'white',
+      minHeight: '100vh',
+      fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif'
+    }}>
+      <CSVFileReader onDataLoaded={setData} />
+      
+      {data.length === 0 && (
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          fontSize: '18px',
+          color: '#666'
+        }}>
+          Upload your CSV file to see the data visualization
+        </div>
+      )}
+
+      {data.length > 0 && (
+        <>
+          {/* Stats Section - integrate this after "It's all gone" */}
+          <div style={{ padding: '100px 20px', textAlign: 'center' }}>
+            <div style={{ fontSize: '24px', marginBottom: '40px' }}>
+              You're not alone. Since 2015, cyber attacks have caused over{" "}
+              <AnimatedCounter 
+                value={totalLoss} 
+                prefix="$" 
+                suffix=" million" 
+                shouldAnimate={showStats}
+              />
+              {" "}in damages worldwide.
+            </div>
+            <div style={{ fontSize: '20px', marginBottom: '40px' }}>
+              Affecting more than{" "}
+              <AnimatedCounter 
+                value={totalUsers} 
+                suffix=" people" 
+                shouldAnimate={showStats}
+              />
+              {" "}just like you.
+            </div>
+          </div>
+
+          {/* Financial Impact Dots */}
+          <div style={{ padding: '50px 20px' }}>
+            <div style={{ 
+              fontSize: '20px', 
+              textAlign: 'center', 
+              marginBottom: '30px' 
+            }}>
+              Each circle represents an attack. Size shows the financial damage.
+            </div>
+            <FinancialDots data={data} isVisible={showDots} />
+            <div style={{ 
+              textAlign: 'center', 
+              fontSize: '14px', 
+              color: '#ccc',
+              marginTop: '20px' 
+            }}>
+              <span style={{color: '#ff4444'}}>China</span> | 
+              <span style={{color: '#44ff44'}}> India</span> | 
+              <span style={{color: '#4444ff'}}> UK</span> | 
+              <span style={{color: '#ffff44'}}> Germany</span> | 
+              <span style={{color: '#ff44ff'}}> France</span>
+            </div>
+          </div>
+
+          {/* Timeline */}
+          <div style={{ padding: '50px 20px' }}>
+            <div style={{ 
+              fontSize: '20px', 
+              textAlign: 'center', 
+              marginBottom: '30px' 
+            }}>
+              The attacks are getting worse over time.
+            </div>
+            <AttackTimeline data={data} isVisible={showTimeline} />
+          </div>
+
+          {/* Industry Impact */}
+          <div style={{ padding: '50px 20px' }}>
+            <div style={{ 
+              fontSize: '20px', 
+              textAlign: 'center', 
+              marginBottom: '30px' 
+            }}>
+              No industry is safe.
+            </div>
+            <IndustryChart data={data} isVisible={showIndustry} />
+          </div>
+
+          {/* Final stat */}
+          <div style={{ padding: '100px 20px', textAlign: 'center' }}>
+            <div style={{ fontSize: '24px' }}>
+              Average time to resolve an attack:{" "}
+              <AnimatedCounter 
+                value={avgResolutionTime} 
+                suffix=" hours" 
+                shouldAnimate={showStats}
+              />
+            </div>
+            <div style={{ 
+              fontSize: '18px', 
+              color: '#ff4444', 
+              marginTop: '20px',
+              fontWeight: 'bold' 
+            }}>
+              Every second counts.
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default CyberStoryDataViz;
