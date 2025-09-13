@@ -151,15 +151,13 @@ p {
     font-family: 'AR One Sans';
     font-style: normal;
     font-weight: 650;
-    font-size: 14pt;
+    font-size: 16pt;
     line-height: auto;
     white-space: nowrap;
     text-align: center;
 
     color: #FFFFFF;
 }
-
-
 
 .accent-text {
     color: var(--accent-color);
