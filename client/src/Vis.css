@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=AR+One+Sans:wght@400..700&display=swap');
+
+:root {
+    --accent-color: rgb(224, 64, 251);
+    --dark-bg-color: rgba(11, 3, 30, 1);
+    --night-bg-color: rgba(0, 0, 0, 1);
+    --screen-bg-color: rgba(26, 23, 116, 1);
+    --error-bg-color: rgba(65, 2, 2, 1);
+    --light-bg-color: rgba(212, 234, 247, 1);
+}
+
+p {
+    display: inherit;
+    margin-block-start: inherit;
+    margin-block-end: inherit;
+    margin-inline-start: inherit;
+    margin-inline-end: inherit;
+    unicode-bidi: inherit;
+    white-space: pre-wrap;
+}
+
+.page-container {
+    display: flex;
+    float: center;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    justify-content: flex-start;
+    width: auto;
+    min-height: 100vh;
+
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+
+    font-family: Arial, serif;
+    text-align: center;
+    font-weight: 300;
+    font-size: 14pt;
+    background-color: rgba(0, 0, 0, 1);
+    color: rgb(255, 255, 255);
+
+    white-space: pre-wrap;
+}
+
+.background-dark {
+    background: var(--dark-bg-color);
+    transition: background-color 1000ms linear;
+}
+
+.background-light {
+    background: var(--light-bg-color);
+    transition: background-color 1000ms linear;
+}
+
+.background-dark-to-night {
+    background: linear-gradient(180deg, var(--dark-bg-color) 4.25% 4.25%, var(--night-bg-color) 95.75% 95.75%);
+    transition: background-color 1000ms linear;
+}
+
+.background-night {
+    background: var(--night-bg-color);
+    transition: background-color 1000ms linear;
+}
+
+.background-night-to-screen {
+    background: linear-gradient(180deg, var(--night-bg-color) 4.25% 4.25%, var(--screen-bg-color) 95.75% 95.75%);
+    transition: background-color 1000ms linear;
+}
+
+.background-screen {
+    background: var(--screen-bg-color);
+    transition: background-color 1000ms linear;
+}
+
+.background-screen-to-error {
+    background: linear-gradient(180deg, var(--screen-bg-color) 4.25% 4.25%, var(--error-bg-color) 95.75% 95.75%);
+    transition: background-color 1000ms linear;
+}
+
+.background-error {
+    background: var(--error-bg-color);
+    transition: background-color 1000ms linear;
+}
+
+.background-error-to-dark {
+    background: linear-gradient(180deg, var(--error-bg-color) 4.25% 4.25%, var(--dark-bg-color) 95.75% 95.75%);
+    transition: background-color 1000ms linear;
+}
+
+.background-dark-to-light {
+    background: linear-gradient(180deg, var(--dark-bg-color) 4.25% 4.25%, var(--light-bg-color) 95.75% 95.75%);
+    transition: background-color 1000ms linear;
+}
+
+.row-container {
+    display: flex;
+    float: center;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    justify-content: center;
+}
+
+.col-container {
+    display: flex;
+    float: center;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    align-content: space-around;
+    justify-content: center;
+}
+
+.add-gaps {
+    gap: 16pt;
+}
+
+.content-box {
+    padding: 4pt;
+}
+
+.large-text {
+    font-family: 'AR One Sans';
+    font-style: normal;
+    font-weight: 650;
+    font-size: 36pt;
+    line-height: auto;
+    white-space: nowrap;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+.medium-text {
+    font-family: 'AR One Sans';
+    font-style: normal;
+    font-weight: 550;
+    font-size: 24pt;
+    line-height: auto;
+    white-space: nowrap;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+.body-text {
+    font-family: 'AR One Sans';
+    font-style: normal;
+    font-weight: 650;
+    font-size: 14pt;
+    line-height: auto;
+    white-space: nowrap;
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+
+
+.accent-text {
+    color: var(--accent-color);
+}
+
+.emphasis-body-text {
+    color: rgb(245, 145, 40);
+}
+
+.text-spacer {
+    width: 12pt;
+    height: 100%;
+}
+
+.line-spacer {
+    height: 25pt;
+    width: 100%;
+}
+
+.secondary-text {
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14pt;
+    line-height: auto;
+    text-align: center;
+
+    color: rgba(200, 200, 200, 1);
+}
