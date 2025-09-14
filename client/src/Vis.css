@@ -100,6 +100,10 @@ button {
     background: linear-gradient(180deg, var(--dark-bg-color) 4.25% 4.25%, var(--vis-bg-color) 95.75% 95.75%);
 }
 
+.background-vis {
+    background: var(--vis-bg-color);
+}
+
 .background-vis-to-dark {
     background: linear-gradient(180deg, var(--vis-bg-color) 4.25% 4.25%, var(--dark-bg-color) 95.75% 95.75%);
 }

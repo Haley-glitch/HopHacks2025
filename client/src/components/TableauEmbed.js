@@ -32,9 +32,6 @@ function TableauEmbed({ url, width = "100%", height = "600px" }) {
 
     return (
         <div style={{ width: "100%", padding: "20px 0" }}>
-            <p style={{ color: "rgb(255,255,255)", textAlign: "center", marginBottom: "20px" }}>
-                Data Visualization
-            </p>
             <div 
                 ref={ref} 
                 style={{ 

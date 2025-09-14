@@ -8,8 +8,10 @@ function App()
     return (
         <div className="App" id="App">
         <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Vis />} />
             <Route path="/data-vis" element={<Vis />} />
+            <Route path="/ransomware" element={<Home />} />
+            <Route path="/phishing" element={<Home />} />
         </Routes>
         </div>
     );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Scrollama, Step } from "react-scrollama";
+import TableauEmbed from "./components/TableauEmbed";
 import * as d3 from "d3";
 import "./Vis.css";
 import Fig1 from "./assets/Fig1.png";
@@ -528,7 +529,15 @@ function Vis() {
                         </Step>
                     </Scrollama>
 
-                    <div style={{height: "50pt", width: "100%"}}>&nbsp;</div>
+                    <div className="background-dark-to-vis" style={{height: "25pt", width: "100vw"}} />
+
+                    <div className="background-vis row-container" style={{paddingLeft: "10vw", paddingRight: "10vw"}} >
+                        <TableauEmbed url="https://public.tableau.com/views/FinancialLossfromCyberAttackbyCountry/FinancialLossbyCountry?:language=en-US&:sid=&:display_count=n" />
+                    </div>
+
+                    <div className="background-vis-to-dark" style={{height: "25pt", width: "100vw"}} />
+
+                    <div style={{height: "75pt", width: "100%"}}>&nbsp;</div>
 
                     <div className="medium-text">
                         Behind the Numbers: How Attacks Unfold
@@ -588,7 +597,7 @@ function Vis() {
 
                     <div className="row-container">
                         <div className="col-container">
-                            <button type="button" onClick={() => window.location.replace("/")} className="row-container background-radial-select" style={{ height: "auto", width: "20vw"}}>
+                            <button type="button" onClick={() => window.location.replace("/ransomware")} className="row-container background-radial-select" style={{ height: "auto", width: "20vw"}}>
                                 <img src={Fig1} alt="Ransomware" />
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </button>
@@ -598,11 +607,11 @@ function Vis() {
                         </div>
 
                         <div className="col-container">
-                            <button type="button" onClick={() => window.location.replace("/")} className="row-container background-radial-select" style={{ height: "auto", width: "20vw"}}>
+                            <button type="button" onClick={() => window.location.replace("/phishing")} className="row-container background-radial-select" style={{ height: "auto", width: "20vw"}}>
                                 <img src={Fig2} alt="Phishing" />
                             </button>
                             <div className="body-text">
-                                Phishing
+                                Phishing (WIP)
                             </div>
                         </div>
 
@@ -612,7 +621,7 @@ function Vis() {
                                 <img src={Fig3} alt="DDoS" />
                             </button>
                             <div className="body-text">
-                                DDoS
+                                DDoS (WIP)
                             </div>
                         </div>
                     </div>
