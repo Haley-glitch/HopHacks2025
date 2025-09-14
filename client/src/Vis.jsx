@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Scrollama, Step } from "react-scrollama";
 import "./Vis.css";
 import TableauEmbed from "./components/TableauEmbed";
+import Fig1 from "./assets/Fig1.png";
+import Fig2 from "./assets/Fig2.png";
+import Fig3 from "./assets/Fig3.png";
 
 // Animated Counter Component
 const AnimatedCounter = ({ value, duration = 2000, prefix = "", suffix = "", shouldAnimate }) => {
@@ -68,10 +71,10 @@ function Vis() {
     };
     
     return(
-        <div className="page-container background-light">
+        <div className="page-container" style={{background: "#FFFFFF"}}>
             <div className="background-dark" style={{width: "100vw"}}>
                 <div className="body-text" style={{position: "sticky", top: "25vh"}}>
-                    {currentComment === null ? "Imagine." : currentComment}
+                    {currentComment === null ? "" : currentComment}
                 </div>
 
                 <div className="background-dark" style={{width: "100vw"}}>
@@ -87,7 +90,7 @@ function Vis() {
 
                     <div style={{height: "150pt", width: "100%"}}>&nbsp;</div>
 
-                    <Scrollama offset={0.2} onStepEnter={stepUpdateComment}>
+                    <Scrollama offset={commentOffset} onStepEnter={stepUpdateComment}>
                         <Step data={"Imagine."}>
                             <div style={{height: "100pt", width: "100%"}}>&nbsp;</div>
                         </Step>
@@ -99,7 +102,7 @@ function Vis() {
                 <div className="background-dark-to-night" style={{height: "150pt", width: "100vw"}} />
 
                 <div className="background-night" style={{width: "100vw"}}>
-                    <Scrollama offset={0.2} onStepEnter={stepUpdateComment}>
+                    <Scrollama offset={commentOffset} onStepEnter={stepUpdateComment}>
                         <Step data={"In the dead of night."}>
                             <div style={{height: "100pt", width: "100%"}}>&nbsp;</div>
                         </Step>
@@ -107,7 +110,7 @@ function Vis() {
 
                     <div style={{height: "250pt", width: "100%"}}>&nbsp;</div>
 
-                    <Scrollama offset={0.2} onStepEnter={stepUpdateComment}>
+                    <Scrollama offset={commentOffset} onStepEnter={stepUpdateComment}>
                         <Step data={"Returning from a long day at work."}>
                             <div style={{height: "100pt", width: "100%"}}>&nbsp;</div>
                         </Step>
@@ -115,7 +118,7 @@ function Vis() {
 
                     <div style={{height: "350pt", width: "100%"}}>&nbsp;</div>
 
-                    <Scrollama offset={0.2} onStepEnter={stepUpdateComment}>
+                    <Scrollama offset={commentOffset} onStepEnter={stepUpdateComment}>
                         <Step data={"Logging on to your computer."}>
                             <div style={{height: "100pt", width: "100%"}}>&nbsp;</div>
                         </Step>
@@ -129,7 +132,7 @@ function Vis() {
                 <div className="background-screen" style={{width: "100vw"}} >
                     <div style={{height: "150pt", width: "100%"}}>&nbsp;</div>
 
-                    <Scrollama offset={0.2} onStepEnter={stepUpdateComment}>
+                    <Scrollama offset={commentOffset} onStepEnter={stepUpdateComment}>
                         <Step data={"Logging into your bank account."}>
                             <div style={{height: "100pt", width: "100%"}}>&nbsp;</div>
                         </Step>
@@ -137,7 +140,7 @@ function Vis() {
 
                     <div style={{height: "250pt", width: "100%"}}>&nbsp;</div>
 
-                    <Scrollama offset={0.2} onStepEnter={stepUpdateComment}>
+                    <Scrollama offset={commentOffset} onStepEnter={stepUpdateComment}>
                         <Step data={"But it refused."}>
                             <div style={{height: "100pt", width: "100%"}}>&nbsp;</div>
                         </Step>
@@ -151,7 +154,7 @@ function Vis() {
                 <div className="background-error" style={{width: "100vw"}} >
                     <div style={{height: "75pt", width: "100%"}}>&nbsp;</div>
 
-                    <Scrollama offset={0.2} onStepEnter={stepUpdateComment}>
+                    <Scrollama offset={commentOffset} onStepEnter={stepUpdateComment}>
                         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map((_, stepIndex) => (
                             <Step data={"Attempt " + stepIndex + "."} key={stepIndex}>
                                 <div style={{height: (350 * ((21 - stepIndex) / 22)) + "pt", width: "100%"}}>&nbsp;</div>
@@ -171,7 +174,7 @@ function Vis() {
                 <div className="background-error-to-dark" style={{height: "150pt", width: "100vw"}} />
 
                 <div className="background-dark" style={{width: "100vw"}} >
-                    <Scrollama offset={0.2} onStepEnter={stepUpdateComment}>
+                    <Scrollama offset={commentOffset} onStepEnter={stepUpdateComment}>
                         <Step data={""}>
                             <div style={{height: "90vh", width: "100%"}}>&nbsp;</div>
                         </Step>
@@ -261,16 +264,63 @@ function Vis() {
                             <div style={{height: "150pt", width: "100%"}}>&nbsp;</div>
                         </Step>
                     </Scrollama>
+
+                    <div style={{height: "250pt", width: "100%"}}>&nbsp;</div>
+
+                    <div className="medium-text">
+                        Learn More:
+                    </div>
+
+                    <div style={{height: "25pt", width: "100%"}}>&nbsp;</div>
+
+                    <div className="row-container">
+                        <div className="col-container">
+                            <button type="button" onClick={() => window.location.replace("/")} className="row-container background-radial-select" style={{ height: "auto", width: "20vw"}}>
+                                <img src={Fig1} />
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </button>
+                            <div className="body-text">
+                                Ransomware
+                            </div>
+                        </div>
+
+                        <div className="col-container">
+                            <button type="button" onClick={() => window.location.replace("/")} className="row-container background-radial-select" style={{ height: "auto", width: "20vw"}}>
+                                <img src={Fig2} />
+                            </button>
+                            <div className="body-text">
+                                Phishing
+                            </div>
+                        </div>
+
+                        <div className="col-container">
+                            <button type="button" onClick={() => window.location.replace("/")} className="row-container background-radial-select" style={{ height: "auto", width: "20vw"}}>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <img src={Fig3} />
+                            </button>
+                            <div className="body-text">
+                                DDOS
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style={{height: "250pt", width: "100%"}}>&nbsp;</div>
                 </div>
 
-                <div style={{height: "500pt", width: "100%"}}>&nbsp;</div>
-                <div>
+                <div className="background-dark-to-vis" style={{height: "150pt", width: "100vw"}} />
+
+                <div style={{background: "#FFFFFF"}}>
                     <TableauEmbed 
                         url="https://public.tableau.com/views/TrialRunonFinancialLossbyCountry/GeospacialDataFinancialLossbyCountry" 
                         width="90vw" 
                         height="700px" 
+                        style={{opacity: 0.01}}
                     />
                 </div>
+
+                <div className="background-vis-to-dark" style={{height: "150pt", width: "100vw"}} />
+
+                <div style={{height: "500pt", width: "100%"}} />
             </div>
         </div>
     );

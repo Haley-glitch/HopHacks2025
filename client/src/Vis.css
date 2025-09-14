@@ -7,6 +7,7 @@
     --screen-bg-color: rgba(26, 23, 116, 1);
     --error-bg-color: rgba(65, 2, 2, 1);
     --light-bg-color: rgba(212, 234, 247, 1);
+    --vis-bg-color: rgba(255, 255, 255, 1);
 }
 
 p {
@@ -17,6 +18,10 @@ p {
     margin-inline-end: inherit;
     unicode-bidi: inherit;
     white-space: pre-wrap;
+}
+
+button {
+    border: none;
 }
 
 .page-container {
@@ -47,52 +52,60 @@ p {
 
 .background-dark {
     background: var(--dark-bg-color);
-    transition: background-color 1000ms linear;
-}
-
-.background-light {
-    background: var(--light-bg-color);
-    transition: background-color 1000ms linear;
 }
 
 .background-dark-to-night {
     background: linear-gradient(180deg, var(--dark-bg-color) 4.25% 4.25%, var(--night-bg-color) 95.75% 95.75%);
-    transition: background-color 1000ms linear;
 }
 
 .background-night {
     background: var(--night-bg-color);
-    transition: background-color 1000ms linear;
 }
 
 .background-night-to-screen {
     background: linear-gradient(180deg, var(--night-bg-color) 4.25% 4.25%, var(--screen-bg-color) 95.75% 95.75%);
-    transition: background-color 1000ms linear;
 }
 
 .background-screen {
     background: var(--screen-bg-color);
-    transition: background-color 1000ms linear;
 }
 
 .background-screen-to-error {
     background: linear-gradient(180deg, var(--screen-bg-color) 4.25% 4.25%, var(--error-bg-color) 95.75% 95.75%);
-    transition: background-color 1000ms linear;
 }
 
 .background-error {
     background: var(--error-bg-color);
-    transition: background-color 1000ms linear;
 }
 
 .background-error-to-dark {
     background: linear-gradient(180deg, var(--error-bg-color) 4.25% 4.25%, var(--dark-bg-color) 95.75% 95.75%);
-    transition: background-color 1000ms linear;
 }
 
 .background-dark-to-light {
     background: linear-gradient(180deg, var(--dark-bg-color) 4.25% 4.25%, var(--light-bg-color) 95.75% 95.75%);
-    transition: background-color 1000ms linear;
+}
+
+.background-light {
+    background: var(--light-bg-color);
+}
+
+.background-dark-to-vis {
+    background: linear-gradient(180deg, var(--dark-bg-color) 4.25% 4.25%, var(--vis-bg-color) 95.75% 95.75%);
+}
+
+.background-vis-to-dark {
+    background: linear-gradient(180deg, var(--vis-bg-color) 4.25% 4.25%, var(--dark-bg-color) 95.75% 95.75%);
+}
+
+.background-radial-select {
+    background: radial-gradient(50% 50% at 50% 50%, var(--accent-color) 0% 0%, rgba(0, 0, 0, 0) 95.75% 95.75%);
+    transition: all 500ms linear;
+}
+
+.background-radial-select:hover {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 1) 0% 0%, rgba(0, 0, 0, 0) 95.75% 95.75%);
+    transition: all 500ms linear;
 }
 
 .row-container {
