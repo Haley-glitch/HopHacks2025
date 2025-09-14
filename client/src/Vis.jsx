@@ -5,41 +5,59 @@ import TableauEmbed from "./components/TableauEmbed";
 
 // Animated Counter Component
 const AnimatedCounter = ({ value, duration = 2000, prefix = "", suffix = "", shouldAnimate }) => {
-  const [count, setCount] = useState(0);
+    const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    if (!shouldAnimate) return;
+    useEffect(() => {
+        if (!shouldAnimate) return;
 
-    let startTime;
-    const animate = (currentTime) => {
-      if (!startTime) startTime = currentTime;
-      const progress = Math.min((currentTime - startTime) / duration, 1);
-      
-      setCount(Math.floor(progress * value));
-      
-      if (progress < 1) {
+        let startTime;
+        const animate = (currentTime) => {
+        if (!startTime) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        
+        setCount(Math.floor(progress * value));
+        
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        }
+        };
+        
         requestAnimationFrame(animate);
-      }
-    };
-    
-    requestAnimationFrame(animate);
-  }, [shouldAnimate, value, duration]);
+    }, [shouldAnimate, value, duration]);
 
-  return (
-    <span style={{ color: '#ff4444', fontWeight: 'bold' }}>
-      {prefix}{count.toLocaleString()}{suffix}
-    </span>
-  );
+    return (
+        <span>
+            {prefix}{count.toLocaleString()}{suffix}
+        </span>
+    );
 };
 
 function Vis() {
     const [currentStepData, setCurrentStepData] = useState(null);
     const [currentComment, setCurrentComment] = useState(null);
     const [currentStepProgress, setCurrentStepProgress] = useState(null);
+    const [currentStepProgress1, setCurrentStepProgress1] = useState(null);
+    const [currentStepProgress2, setCurrentStepProgress2] = useState(null);
+    const [currentStepProgress3, setCurrentStepProgress3] = useState(null);
+
+    const commentOffset = 0.45;
 
     const stepUpdateProgress = ({ progress }) => {
         setCurrentStepProgress(progress);
     };
+    
+    const stepUpdateProgress1 = ({ progress }) => {
+        setCurrentStepProgress1(progress);
+    };
+
+    const stepUpdateProgress2 = ({ progress }) => {
+        setCurrentStepProgress2(progress);
+    };
+
+    const stepUpdateProgress3 = ({ progress }) => {
+        setCurrentStepProgress3(progress);
+    };
+
 
     const stepUpdateData = ({ data }) => {
         setCurrentStepData(data);
@@ -195,18 +213,52 @@ function Vis() {
                             ruin you.
                         </div>
                     </div>
-                    <Scrollama offset={0.3} onStepEnter={stepUpdateData}>
-                        <Step data="showStats">
-                            <div style={{height: "100vh", width: "100%"}}>
-                                {/* Stats section */}
-                                {currentStepData === "showStats" && (
-                                    <div className="body-text" style={{textAlign: "center", paddingTop: "40vh"}}>
-                                        You're not alone. Since 2015, cyber attacks have caused over{" "}
-                                        <AnimatedCounter value={579} prefix="$" suffix=" million" shouldAnimate={true} />
-                                        {" "}in damages worldwide.
-                                    </div>
-                                )}
+
+                    <div style={{height: "150pt", width: "100%"}}>&nbsp;</div>
+
+                    <Scrollama offset={0.9} onStepProgress={stepUpdateProgress1}>
+                        <div className="row-container body-text" style={{alignItems: "center", height: "64pt", gap: "8pt"}}>
+                            <div className="accent-text large-text" style={{opacity: (currentStepProgress1)}}>
+                                {" "}<AnimatedCounter value={299} prefix="" suffix="" shouldAnimate={true} />{" "}
                             </div>
+                            <div className="medium-text" style={{opacity: (currentStepProgress1)}}>
+                                large-scale attacks during 2024.
+                            </div>
+                        </div>
+                        <Step data={""}>
+                            <div style={{height: "150pt", width: "100%"}}>&nbsp;</div>
+                        </Step>
+                    </Scrollama>
+
+                    <div style={{height: "25pt", width: "100%"}}>&nbsp;</div>
+
+                    <Scrollama offset={0.9} onStepProgress={stepUpdateProgress2}>
+                        <div className="row-container body-text" style={{alignItems: "center", height: "64pt", gap: "8pt"}}>
+                            <div className="accent-text large-text" style={{opacity: (currentStepProgress2)}}>
+                                {" "}<AnimatedCounter value={15.4} prefix="" suffix=" Billion" shouldAnimate={true} />{" "}
+                            </div>
+                            <div className="medium-text" style={{opacity: (currentStepProgress2)}}>
+                                USD lost from cyber attacks during 2024.
+                            </div>
+                        </div>
+                        <Step data={""}>
+                            <div style={{height: "150pt", width: "100%"}}>&nbsp;</div>
+                        </Step>
+                    </Scrollama>
+
+                    <div style={{height: "25pt", width: "100%"}}>&nbsp;</div>
+
+                    <Scrollama offset={0.9} onStepProgress={(stepUpdateProgress3)}>
+                        <div className="row-container body-text" style={{alignItems: "center", height: "64pt", gap: "8pt"}}>
+                            <div className="accent-text large-text" style={{opacity: (currentStepProgress3)}}>
+                                {" "}<AnimatedCounter value={153} prefix="" suffix=" Million" shouldAnimate={true} />{" "}
+                            </div>
+                            <div className="medium-text" style={{opacity: (currentStepProgress3)}}>
+                                users impacted by cyber attacks during 2024.
+                            </div>
+                        </div>
+                        <Step data={""}>
+                            <div style={{height: "150pt", width: "100%"}}>&nbsp;</div>
                         </Step>
                     </Scrollama>
                 </div>
