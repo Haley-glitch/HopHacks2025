@@ -7,7 +7,7 @@ import Fig2 from "./assets/Fig2.png";
 import Fig3 from "./assets/Fig3.png";
 
 // Animated Counter Component
-const AnimatedCounter = ({ value, duration = 2000, prefix = "", suffix = "", shouldAnimate }) => {
+const AnimatedCounter = ({ value, duration = 500, prefix = "", suffix = "", shouldAnimate }) => {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
@@ -269,13 +269,24 @@ const CyberAttackViz = ({ attackType, isActive }) => {
 
 // Glitch Text Component
 const GlitchText = ({ children, isActive }) => {
-    return (
-        <div className={`glitch-text ${isActive ? 'active' : ''}`}>
-            <span className="glitch-text-content">{children}</span>
-            <span className="glitch-text-content">{children}</span>
-            <span className="glitch-text-content">{children}</span>
-        </div>
-    );
+    if (isActive === true)
+    {
+        return (
+            <div className={`glitch-text ${isActive ? 'active' : ''}`}>
+                <span className="glitch-text-content">{children}</span>
+                <span className="glitch-text-content">{children}</span>
+                <span className="glitch-text-content">{children}</span>
+            </div>
+        );
+    }
+    else
+    {
+        return (
+            <div className="glitch-text">
+                <span className="glitch-text-content">{children}</span>
+            </div>
+        );
+    }
 };
 
 function Vis() {
@@ -476,7 +487,7 @@ function Vis() {
                                         large-scale attacks during 2024.
                                     </div>
                                 </div>
-                                <div style={{height: "150pt", width: "100%"}}>&nbsp;</div>
+                                <div style={{height: "100pt", width: "100%"}}>&nbsp;</div>
                             </div>
                         </Step>
                     </Scrollama>
@@ -494,7 +505,7 @@ function Vis() {
                                         USD lost from cyber attacks during 2024.
                                     </div>
                                 </div>
-                                <div style={{height: "150pt", width: "100%"}}>&nbsp;</div>
+                                <div style={{height: "100pt", width: "100%"}}>&nbsp;</div>
                             </div>
                         </Step>
                     </Scrollama>
@@ -512,18 +523,18 @@ function Vis() {
                                         users impacted by cyber attacks during 2024.
                                     </div>
                                 </div>
-                                <div style={{height: "150pt", width: "100%"}}>&nbsp;</div>
+                                <div style={{height: "100pt", width: "100%"}}>&nbsp;</div>
                             </div>
                         </Step>
                     </Scrollama>
 
-                    <div style={{height: "250pt", width: "100%"}}>&nbsp;</div>
+                    <div style={{height: "50pt", width: "100%"}}>&nbsp;</div>
 
-                    <div className="body-text">
-                        Behind the numbers: How attacks unfold
+                    <div className="medium-text">
+                        Behind the Numbers: How Attacks Unfold
                     </div>
 
-                    <div style={{height: "100pt", width: "100%"}}>&nbsp;</div>
+                    <div style={{height: "50pt", width: "100%"}}>&nbsp;</div>
 
                     <Scrollama offset={0.5} onStepEnter={stepUpdateData}>
                         <Step data={{viz: "ddos"}}>
@@ -532,7 +543,7 @@ function Vis() {
                                     DDoS Attack: Network Overload
                                 </div>
                                 <CyberAttackViz attackType="ddos" isActive={activeViz === "ddos"} />
-                                <div className="body-text" style={{marginTop: "2rem", maxWidth: "600px"}}>
+                                <div className="body-text" style={{marginTop: "2rem"}}>
                                     Watch as infected nodes (red) overwhelm the network, spreading chaos through connected systems.
                                 </div>
                             </div>
@@ -546,7 +557,7 @@ function Vis() {
                                     Phishing Attack: Baiting Victims
                                 </div>
                                 <CyberAttackViz attackType="phishing" isActive={activeViz === "phishing"} />
-                                <div className="body-text" style={{marginTop: "2rem", maxWidth: "600px"}}>
+                                <div className="body-text" style={{marginTop: "2rem"}}>
                                     Data packets (blue) fall into the trap. Once caught, they turn red - compromised forever.
                                 </div>
                             </div>
@@ -560,7 +571,7 @@ function Vis() {
                                     Ransomware Attack: Files Under Siege
                                 </div>
                                 <CyberAttackViz attackType="ransomware" isActive={activeViz === "ransomware"} />
-                                <div className="body-text" style={{marginTop: "2rem", maxWidth: "600px"}}>
+                                <div className="body-text" style={{marginTop: "2rem"}}>
                                     One by one, files get encrypted and locked. Years of work, locked behind digital bars.
                                 </div>
                             </div>
@@ -606,12 +617,8 @@ function Vis() {
                         </div>
                     </div>
 
-                    <div style={{height: "250pt", width: "100%"}}>&nbsp;</div>
+                    <div style={{height: "25vh", width: "100%"}}>&nbsp;</div>
                 </div>
-
-                <div className="background-dark-to-vis" style={{height: "150pt", width: "100vw"}} />
-                <div className="background-vis-to-dark" style={{height: "150pt", width: "100vw"}} />
-                <div style={{height: "500pt", width: "100%"}} />
             </div>
         </div>
     );

@@ -361,23 +361,6 @@ button {
     100% { transform: translateY(400px); opacity: 0; }
 }
 
-/* Terminal-style text cursor effect */
-.body-text::after {
-    content: '|';
-    animation: blink 1s infinite;
-    color: var(--accent-color);
-    margin-left: 2px;
-}
-
-.body-text:not(:hover)::after {
-    opacity: 0;
-}
-
-@keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .cyber-viz {
